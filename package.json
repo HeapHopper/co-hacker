@@ -12,6 +12,18 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "languages": [
+      {
+        "id": "cpp",
+        "aliases": ["C++", "cpp"],
+        "extensions": [".cpp", ".h", ".hpp", ".cxx", ".hxx"]
+      },
+      {
+        "id": "c",
+        "aliases": ["C", "c"],
+        "extensions": [".c", ".h"]
+      }
+    ],
     "commands": [
       {
         "command": "co-hacker.helloWorld",
