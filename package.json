@@ -27,6 +27,13 @@
         "extensions": [".c", ".h"]
       }
     ],
+    "codeActions": [
+      {
+        "language": "cpp",
+        "title": "Suggest fix",
+        "command": "co-hacker.SuggestFix"
+      }
+    ],
     "commands": [
       {
         "command": "co-hacker.helloWorld",
