@@ -45,7 +45,7 @@ export function registerAskOpenAICommand(context: vscode.ExtensionContext) {
                   'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                  model: 'gpt-4',
+                  model: 'gpt-4.1-mini',
                   messages: [
                       { role: 'system', content: 'You are a helpful assistant for C/C++ developers.' },
                       { role: 'user', content: prompt }
