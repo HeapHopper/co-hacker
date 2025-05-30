@@ -18,13 +18,28 @@
     "languages": [
       {
         "id": "cpp",
-        "aliases": ["C++", "cpp"],
-        "extensions": [".cpp", ".h", ".hpp", ".cxx", ".hxx"]
+        "aliases": [
+          "C++",
+          "cpp"
+        ],
+        "extensions": [
+          ".cpp",
+          ".h",
+          ".hpp",
+          ".cxx",
+          ".hxx"
+        ]
       },
       {
         "id": "c",
-        "aliases": ["C", "c"],
-        "extensions": [".c", ".h"]
+        "aliases": [
+          "C",
+          "c"
+        ],
+        "extensions": [
+          ".c",
+          ".h"
+        ]
       }
     ],
     "codeActions": [
@@ -38,6 +53,10 @@
       {
         "command": "co-hacker.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "extension.askOpenAI",
+        "title": "Co-Hacker: Ask OpenAI About C/C++ Code"
       }
     ]
   },
@@ -50,14 +69,17 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.100.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
+    "@types/vscode": "^1.100.0",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
-    "eslint": "^9.25.1",
-    "typescript": "^5.8.3",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.5.2"
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0"
   }
 }
