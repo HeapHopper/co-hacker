@@ -44,19 +44,19 @@
     ],
     "codeActions": [
       {
-        "language": "cpp",
-        "title": "Suggest fix",
-        "command": "co-hacker.SuggestFix"
+        "language": ["cpp","c"],
+        "title": "Co-Hacker: Suggest fix",
+        "command": "co-hacker.SuggestFixDemo"
       }
     ],
     "commands": [
       {
         "command": "co-hacker.helloWorld",
-        "title": "Hello World"
+        "title": "Co-Hacker: Welcome!"
       },
       {
-        "command": "extension.askOpenAI",
-        "title": "Co-Hacker: Ask OpenAI About C/C++ Code"
+        "command": "extension.askAI",
+        "title": "Co-Hacker: Ask AI about selected C/C++ Code"
       }
     ]
   },

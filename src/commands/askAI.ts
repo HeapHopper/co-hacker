@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import * as dotenv from 'dotenv';
 
-export function registerAskOpenAICommand(context: vscode.ExtensionContext) {
-  const askOpenAIdisposable = vscode.commands.registerCommand('extension.askOpenAI', async () => {
+export function registerAskAICommand(context: vscode.ExtensionContext) {
+  const askOpenAIdisposable = vscode.commands.registerCommand('extension.askAI', async () => {
       const editor = vscode.window.activeTextEditor;
 
       if (!editor) {
@@ -71,7 +71,7 @@ export function registerAskOpenAICommand(context: vscode.ExtensionContext) {
           const reply = data.choices?.[0]?.message?.content || 'No response';
           const panel = vscode.window.createWebviewPanel(
             'openaiResponse',
-            'OpenAI Response',
+            'AI Response',
             vscode.ViewColumn.Beside,
             { enableScripts: true }
             );

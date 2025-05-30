@@ -2,9 +2,9 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-import { registerHelloWorldCommand } from './commands/helloworld';
-import { registerCppQuickFixCodeAction } from './codeActions/cppQuickFix';
-import { registerAskOpenAICommand } from './commands/askOpenAI';
+import { registerWelcomeCommand } from './commands/welcome';
+import { registerSuggestFixDemoCodeAction } from './codeActions/suggestFixDemo';
+import { registerAskAICommand } from './commands/askAI';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -14,9 +14,9 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "co-hacker" is now active!');
 
-  registerHelloWorldCommand(context);
-  registerCppQuickFixCodeAction(context);
-  registerAskOpenAICommand(context);
+  registerWelcomeCommand(context);
+  registerSuggestFixDemoCodeAction(context);
+  registerAskAICommand(context);
 
   console.log('commands and codeActions were registered successfully!');
 

@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-export function registerCppQuickFixCodeAction(context: vscode.ExtensionContext) {
+export function registerSuggestFixDemoCodeAction(context: vscode.ExtensionContext) {
 
     const suggestFixDisposable = vscode.languages.registerCodeActionsProvider('cpp', {
     provideCodeActions(document, range, context, token) {
