@@ -47,7 +47,13 @@ export function registerAskOpenAICommand(context: vscode.ExtensionContext) {
               body: JSON.stringify({
                   model: 'gpt-4.1-mini',
                   messages: [
-                      { role: 'system', content: 'You are a helpful assistant for C/C++ developers.' },
+                      { role: 'system', content: `
+                        You are a helpful assistant for C/C++ developers.
+                        Focus on highlighting potential bugs and security issues in the code.
+                        If the code is correct, explain what it does in a single sentence.
+                        If the code is incorrect, provide a short straight to the point explanation
+                        of the issues and suggest fixes.
+                        ` },
                       { role: 'user', content: prompt }
                   ],
                   temperature: 0.5
