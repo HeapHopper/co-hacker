@@ -44,9 +44,20 @@
     ],
     "codeActions": [
       {
-        "language": ["cpp","c"],
+        "language": [
+          "cpp",
+          "c"
+        ],
         "title": "Co-Hacker: Suggest fix",
         "command": "co-hacker.SuggestFixDemo"
+      },
+      {
+        "language": [
+          "cpp",
+          "c"
+        ],
+        "title": "Co-Hacker: look for vulnerabilities",
+        "command": "co-hacker.analyzeVulnerabilities"
       }
     ],
     "commands": [
@@ -80,6 +91,9 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "dotenv": "^16.5.0"
+    "@langchain/core": "^0.3.57",
+    "@langchain/openai": "^0.5.11",
+    "dotenv": "^16.5.0",
+    "openai": "^5.0.1"
   }
 }
