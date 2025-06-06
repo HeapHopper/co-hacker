@@ -18,8 +18,7 @@ async function analyzeSnippet(snippet: string): Promise<CodeSnippetResponse> {
   const response = await fetch('http://localhost:8000/analyze', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.OPENAI_API_KEY || ''}`
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({ snippet })
   });
