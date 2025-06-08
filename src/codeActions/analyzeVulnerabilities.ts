@@ -1,10 +1,4 @@
 import * as vscode from 'vscode';
-import dotenv from "dotenv";
-dotenv.config();
-
-import { ChatOpenAI } from "@langchain/openai";
-import { HumanMessage } from "@langchain/core/messages";
-
 
 interface CodeSnippetResponse {
     is_vulnerable: boolean;
