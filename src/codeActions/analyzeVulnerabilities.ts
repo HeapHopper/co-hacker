@@ -1,10 +1,4 @@
 import * as vscode from 'vscode';
-import dotenv from "dotenv";
-dotenv.config();
-
-import { ChatOpenAI } from "@langchain/openai";
-import { HumanMessage } from "@langchain/core/messages";
-
 
 interface CodeSnippetResponse {
     is_vulnerable: boolean;
@@ -18,8 +12,7 @@ async function analyzeSnippet(snippet: string): Promise<CodeSnippetResponse> {
   const response = await fetch('http://localhost:8000/analyze', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.OPENAI_API_KEY || ''}`
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({ snippet })
   });
@@ -30,42 +23,6 @@ async function analyzeSnippet(snippet: string): Promise<CodeSnippetResponse> {
 
   return response.json() as Promise<CodeSnippetResponse>;
 }
-
-
-// export async function analyzeSnippet(snippet: string): Promise<CodeSnippetResponse> {
-//     const chatModel = new ChatOpenAI({
-//         apiKey: process.env.OPENAI_API_KEY,
-//         modelName: "gpt-4.1-nano", 
-//         temperature: 0
-//     });
-
-//     const userPrompt = `
-// Analyze vulnerabilities in the following C/C++ snippet:
-
-// \`\`\`c
-// ${snippet}
-// \`\`\`
-
-// Return a JSON object with:
-// - is_vulnerable: true or false
-// - vulnerability_type: a string
-// - vulnerability: description
-// - suggest_fix: rewrite the code with the fix, add a comment explaining the fix, don't add any other text
-// `;
-
-//     const response = await chatModel.invoke([
-//         new HumanMessage(userPrompt)
-//     ]);
-
-//     const rawText = response.content?.toString().trim();
-
-//     try {
-//         const parsed = JSON.parse(rawText ?? "{}");
-//         return parsed;
-//     } catch (err) {
-//         throw new Error("Failed to parse model response: " + rawText);
-//     }
-// }
 
 const codeActionProvider: vscode.CodeActionProvider = {
     provideCodeActions(
