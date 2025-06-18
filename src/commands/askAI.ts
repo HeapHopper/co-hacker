@@ -30,7 +30,8 @@ export function registerAskAICommand(context: vscode.ExtensionContext) {
 
     const temp = JSON.stringify({ snippet });
     try {
-        const response = await fetch('http://localhost:8000/ask_ai', {
+        const apiURL = process.env.CO_HACKER_SERVER_HOST_URL+'/ask_ai/';
+        const response = await fetch(apiURL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

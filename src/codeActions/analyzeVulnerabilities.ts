@@ -9,7 +9,8 @@ interface CodeSnippetResponse {
 
 // TODO: Replace with actual API endpoint
 async function analyzeSnippet(snippet: string): Promise<CodeSnippetResponse> {
-  const response = await fetch('http://localhost:8000/analyze', {
+  const apiURL = process.env.CO_HACKER_SERVER_HOST_URL+'/analyze/';
+  const response = await fetch(apiURL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
