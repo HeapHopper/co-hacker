@@ -11,7 +11,9 @@
   ],
   "activationEvents": [
     "onLanguage:cpp",
-    "onLanguage:c"
+    "onLanguage:c",
+    "onCommand:co-hacker.analyzeVulnerabilities",
+    "onCommand:co-hacker.askAI"
   ],
   "main": "./out/extension.js",
   "contributes": {

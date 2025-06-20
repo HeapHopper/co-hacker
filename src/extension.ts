@@ -15,6 +15,7 @@ import { registerWelcomeCommand } from './commands/welcome';
 // import { registerSuggestFixDemoCodeAction } from './codeActions/suggestFixDemo';
 import { registerAskAICommand } from './commands/askAI';
 import { registerAnalyzeVulnerabilitiesCodeAction } from './codeActions/analyzeVulnerabilities';
+import { registerInlineAssistant } from './inlineAssistant/inlineAssistant';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -28,6 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
   // registerSuggestFixDemoCodeAction(context);
   registerAskAICommand(context);
   registerAnalyzeVulnerabilitiesCodeAction(context);
+  registerInlineAssistant(context);
 
   console.log('commands and codeActions were registered successfully!');
 
