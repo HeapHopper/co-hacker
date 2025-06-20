@@ -26,9 +26,35 @@ let debounceTimer: NodeJS.Timeout | undefined;
 export function registerInlineAssistant(context: vscode.ExtensionContext) {
   const disposable = vscode.workspace.onDidChangeTextDocument(event => {
     const change = event.contentChanges[0];
-    if (!change || change.text !== ';') return;
+    if (!change) return;
 
-    if (debounceTimer) clearTimeout(debounceTimer);
+    // If the suggestion was just inserted
+    if (
+      lastInlineSuggestion &&
+      change.text === lastInlineSuggestion.suggestFix &&
+      change.range.start.line === lastInlineSuggestion.position.line
+    ) {
+      // Replace the whole line with the suggestion
+      const editor = vscode.window.activeTextEditor;
+      if (editor && editor.document === event.document) {
+        const line = change.range.start.line;
+        editor.edit(editBuilder => {
+          editBuilder.replace(
+            editor.document.lineAt(line).range,
+            lastInlineSuggestion!.suggestFix
+          );
+        });
+      }
+      // Clear the suggestion
+      lastInlineSuggestion = null;
+      inlineSuggestionActive = false;
+      return;
+    }
+
+    // Your original trigger logic
+    if (change.text !== ';') return;
+
+    if (debounceTimer) {clearTimeout(debounceTimer);}
     debounceTimer = setTimeout(() => {
       handleScopeUpdate(event.document, change.range.start);
     }, 500);
