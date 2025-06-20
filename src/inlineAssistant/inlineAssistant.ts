@@ -56,12 +56,22 @@ async function handleScopeUpdate(document: vscode.TextDocument, position: vscode
     const currentFile = vscode.window.activeTextEditor?.document.fileName || '';
 
     const newCode = await fetchFixedCode(codeBlock, currentLine, currentFile);
-
     if (!newCode) return;
 
-    editor.edit(editBuilder => {
-        editBuilder.replace(range, newCode);
-    });
+    let response: InlineAssistantResponse;
+    try {
+        response = JSON.parse(newCode) as InlineAssistantResponse;
+    } catch (err) {
+        vscode.window.showErrorMessage('Failed to parse response from inline assistant.');
+        return;
+    }
+
+    if (response.is_vulnerable) {
+        const lineRange = document.lineAt(position.line).range;
+        editor.edit(editBuilder => {
+            editBuilder.replace(lineRange, response.suggest_fix);
+        });
+    }
 }
 
 function findScopeStart(text: string, offset: number): number {
