@@ -30,25 +30,29 @@ export function registerInlineAssistant(context: vscode.ExtensionContext) {
 
     // If the suggestion was just inserted
     if (
-      lastInlineSuggestion &&
-      change.text === lastInlineSuggestion.suggestFix &&
-      change.range.start.line === lastInlineSuggestion.position.line
+    lastInlineSuggestion &&
+    change.text === lastInlineSuggestion.suggestFix &&
+    change.range.start.line === lastInlineSuggestion.position.line
     ) {
-      // Replace the whole line with the suggestion
-      const editor = vscode.window.activeTextEditor;
-      if (editor && editor.document === event.document) {
-        const line = change.range.start.line;
-        editor.edit(editBuilder => {
-          editBuilder.replace(
-            editor.document.lineAt(line).range,
-            lastInlineSuggestion!.suggestFix
-          );
-        });
-      }
-      // Clear the suggestion
-      lastInlineSuggestion = null;
-      inlineSuggestionActive = false;
-      return;
+        const editor = vscode.window.activeTextEditor;
+        if (editor && editor.document === event.document) {
+            const line = change.range.start.line;
+            const originalLineText = editor.document.lineAt(line).text;
+            const indentationMatch = originalLineText.match(/^(\s*)/);
+            const indentation = indentationMatch ? indentationMatch[1] : '';
+            const indentedSuggestion = indentation + lastInlineSuggestion.suggestFix.trimStart();
+
+            editor.edit(editBuilder => {
+            editBuilder.replace(
+                editor.document.lineAt(line).range,
+                indentedSuggestion
+            );
+            });
+        }
+        // Clear the suggestion
+        lastInlineSuggestion = null;
+        inlineSuggestionActive = false;
+        return;
     }
 
     // Your original trigger logic
