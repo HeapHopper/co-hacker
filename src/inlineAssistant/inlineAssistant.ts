@@ -17,6 +17,10 @@ interface InlineAssistantResponse {
     suggest_fix: string
 }
 
+let lastInlineSuggestion: { position: vscode.Position, suggestFix: string } | null = null;
+
+let inlineSuggestionActive = false; // Add this flag
+
 let debounceTimer: NodeJS.Timeout | undefined;
 
 export function registerInlineAssistant(context: vscode.ExtensionContext) {
@@ -31,6 +35,33 @@ export function registerInlineAssistant(context: vscode.ExtensionContext) {
   });
 
   context.subscriptions.push(disposable);
+
+  // Register inline completion provider
+  context.subscriptions.push(
+    vscode.languages.registerInlineCompletionItemProvider(
+      { scheme: 'file' }, // or restrict to specific languages
+      {
+        provideInlineCompletionItems(document, position, context, token) {
+          if (
+            inlineSuggestionActive &&
+            lastInlineSuggestion &&
+            lastInlineSuggestion.position.line === position.line &&
+            lastInlineSuggestion.position.character === position.character
+          ) {
+            // Deactivate after providing once (optional: or use a timeout)
+            inlineSuggestionActive = false;
+            return [
+              {
+                insertText: lastInlineSuggestion.suggestFix,
+                range: new vscode.Range(position, position) // Only insert at cursor, don't replace line
+              }
+            ];
+          }
+          return [];
+        }
+      }
+    )
+  );
 }
 
 async function handleScopeUpdate(document: vscode.TextDocument, position: vscode.Position) {
@@ -67,10 +98,14 @@ async function handleScopeUpdate(document: vscode.TextDocument, position: vscode
     }
 
     if (response.is_vulnerable) {
-        const lineRange = document.lineAt(position.line).range;
-        editor.edit(editBuilder => {
-            editBuilder.replace(lineRange, response.suggest_fix);
-        });
+        lastInlineSuggestion = {
+            position: new vscode.Position(position.line, document.lineAt(position.line).range.end.character),
+            suggestFix: response.suggest_fix
+        };
+        // Trigger the inline suggestion (ghost text)
+        inlineSuggestionActive = true; // Activate suggestion
+        vscode.commands.executeCommand('editor.action.inlineSuggest.trigger');
+        vscode.window.showInformationMessage('Vulnerability detected! Suggested fix available inline (Tab to accept).');
     }
 }
 
