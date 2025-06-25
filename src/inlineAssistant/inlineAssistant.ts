@@ -114,7 +114,7 @@ async function handleScopeUpdate(document: vscode.TextDocument, position: vscode
 
     const codeBlock = document.getText(range);
     const currentLine = document.lineAt(position.line).text;
-    const currentFile = document.getText();
+    const currentFile = vscode.window.activeTextEditor?.document.fileName || '';
 
     const newCode = await fetchFixedCode(codeBlock, currentLine, currentFile);
     if (!newCode) return;
@@ -136,17 +136,6 @@ async function handleScopeUpdate(document: vscode.TextDocument, position: vscode
         inlineSuggestionActive = true; // Activate suggestion
         vscode.commands.executeCommand('editor.action.inlineSuggest.trigger');
         vscode.window.showInformationMessage('Vulnerability detected! Suggested fix available inline (Tab to accept).');
-    }
-
-    else if (response.suggest_fix !== '') {
-        lastInlineSuggestion = {
-            position: new vscode.Position(position.line, document.lineAt(position.line).range.end.character),
-            suggestFix: response.suggest_fix
-        };
-        // Trigger the inline suggestion (ghost text)
-        inlineSuggestionActive = true; // Activate suggestion
-        vscode.commands.executeCommand('editor.action.inlineSuggest.trigger');
-        vscode.window.showInformationMessage('Suggested fix available inline (Tab to accept).');
     }
 }
 
