@@ -34,3 +34,5 @@ In the example above we can see how the Co Hacker inline assistant detects three
 
 #### Upgrading deprecated code
 
+Old code using deprecated methods can be dangerous just like handling raw memory. This is why the inline assistant not returning just a binary classification if the code vulnerable or not. It has also a middle option: the code is secure alright, but should be upgraded:
+
