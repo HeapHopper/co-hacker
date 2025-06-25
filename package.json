@@ -1,0 +1,100 @@
+{
+  "name": "co-hacker",
+  "displayName": "co_hacker",
+  "description": "",
+  "icon": "assets/icon.png",
+  "publisher": "HeapHopper",
+  "license": "MIT",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HeapHopper/co-hacker"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:cpp",
+    "onLanguage:c",
+    "onCommand:co-hacker.analyzeVulnerabilities",
+    "onCommand:co-hacker.askAI"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "cpp",
+        "aliases": [
+          "C++",
+          "cpp"
+        ],
+        "extensions": [
+          ".cpp",
+          ".h",
+          ".hpp",
+          ".cxx",
+          ".hxx"
+        ]
+      },
+      {
+        "id": "c",
+        "aliases": [
+          "C",
+          "c"
+        ],
+        "extensions": [
+          ".c",
+          ".h"
+        ]
+      }
+    ],
+    "codeActions": [
+      {
+        "language": [
+          "cpp",
+          "c"
+        ],
+        "title": "Co-Hacker: look for vulnerabilities",
+        "command": "co-hacker.analyzeVulnerabilities"
+      }
+    ],
+    "commands": [
+      {
+        "command": "co-hacker.helloWorld",
+        "title": "Co-Hacker: Welcome!"
+      },
+      {
+        "command": "extension.askAI",
+        "title": "Co-Hacker: Ask AI about selected C/C++ Code"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.100.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@langchain/core": "^0.3.57",
+    "@langchain/openai": "^0.5.11",
+    "dotenv": "^16.5.0",
+    "openai": "^5.0.1"
+  }
+}
