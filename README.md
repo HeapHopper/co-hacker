@@ -1,68 +1,59 @@
-# Co Hacker - a Generative AI Secure code assistant
+# Co Hacker - A Generative AI Secure Code Assistant
 
-![alt text](assets/logo.jpg)
+![Co Hacker Logo](assets/logo.jpg)
 
-## The vision of Co Hacker
+## Vision of Co Hacker
 
-**Co Hacker** is a Co-Pilot like vscode extension, made by developers for developers, aiming to capture code vulnerabilities in development time.
-It is offering manual and automatic "on the fly" solutions to vulnerable code.
+**Co Hacker** is a VSCode extension, built by developers for developers, designed to identify code vulnerabilities during development. It offers both manual and automatic "on-the-fly" solutions to insecure code.
 
-The VSCode extension is a client side application runs in the IDE and sends code snippets to the Co-Hacker server-side application. The server runs an AI Agent to find unsecure, undefined or deprecated logic - and returns a suggested fix to the extension - that offers it to the developer.
+The VSCode extension runs client-side within the IDE, sending code snippets to the Co Hacker server. The server leverages AI agents to detect insecure, undefined, or deprecated logic, and returns suggested fixes to the extension, which are then presented to the developer.
 
-More on how the server uses LLM tools like langchain and langgraph for code security analysis can be found in the [Co-Hacker-Server](https://github.com/HeapHopper/co-hacker-server) repository.
+Learn more about how the server uses LLM tools like LangChain and LangGraph for code security analysis in the [Co-Hacker-Server](https://github.com/HeapHopper/co-hacker-server) repository.
 
 ## Features
 
-### Inline code security assistant
+### Inline Code Security Assistant
 
-The inline assistant is the main feature of Co Hacker, providing realtime insights and suggestions for the user code:
+The inline assistant is Co Hacker’s main feature, providing real-time insights and suggestions for your code:
 
-#### Code vulnerabilities detection
+#### Code Vulnerability Detection
 
-![alt text](assets/demo_string.gif)
+![Vulnerability Detection Demo](assets/demo_string.gif)
 
-In the example above we can see how the Co Hacker inline assistant detects three different code vulnerabilities in real time:
+In the example above, the Co Hacker inline assistant detects three different code vulnerabilities in real time:
 
-1. Using `gets(a)` - an unsecure method for input reading without any input length check, prone to cause **Buffer Overflow** vulnerabilities.
-    -   The inline assistant offers using `std` method instead.
+1. Using `gets(a)`—an insecure method for input reading without any input length check, which can cause **buffer overflow** vulnerabilities.
+   - The inline assistant suggests using a safer standard method instead.
 
-2. Although `strncpy(dst,src,len)` considered to be a secure method, Co Hacker detects an **Out Of Bounds (OOB)** vulnerability since the `len` used is bigger than `dst` size
-   - The inline assistant fixes `len` to be the length of the `dst` buffer -1, as the last byte reserved to the null-terminator.
-  
-3. Scope awareness - `delete[] a;` is indeed the right way to release buffer `a` memory, but the user did not notice that this buffer was already released, an issue known as **double free** vulnerability.
-   - Fortunately - Co Hacker did! and it offers to remove the line, avoiding delete an already deleted variable.
+2. Although `strncpy(dst, src, len)` is generally considered secure, Co Hacker detects an **out-of-bounds (OOB)** vulnerability because `len` exceeds the size of `dst`.
+   - The assistant recommends setting `len` to the size of the `dst` buffer minus one, reserving the last byte for the null terminator.
 
-#### Upgrading deprecated code
+3. Scope awareness—`delete[] a;` is the correct way to release the memory for buffer `a`, but the user did not notice that this buffer was already released, leading to a **double free** vulnerability.
+   - Co Hacker detects this and suggests removing the redundant line, preventing deletion of an already freed variable.
 
-Old code using deprecated methods can be dangerous just like handling raw memory. This is why the inline assistant not returning just a binary classification if the code is vulnerable or not. It has also a middle option: the code is secure alright, but should be upgraded:
+#### Upgrading Deprecated Code
 
-![alt text](assets/demo_auto_ptr.gif)
+Using deprecated methods can be as risky as handling raw memory. That’s why the inline assistant doesn’t just classify code as vulnerable or not—it also highlights code that is secure but should be modernized:
 
+![Deprecated Code Upgrade Demo](assets/demo_auto_ptr.gif)
 
-In the example above, the Co Hacker offers to replace the deprecated STL `std::auto_ptr<>` with the modern replacement `std::unique_ptr<>`.
+In the example above, Co Hacker suggests replacing the deprecated STL `std::auto_ptr<>` with the modern `std::unique_ptr<>`.
 
+### Manual Code Security Assistant
 
-### Manual code security assistant
+You can also use Co Hacker manually by selecting a code snippet and requesting a security analysis:
 
-It is also possible to use Co Hacker in manual way, selecting a code snippet and asking to get insight about the safety of the code:
+![Manual Assistant Demo](assets/demo_manual_assistant.gif)
 
-![alt text](assets/demo_manual_assistant.gif)
+In the top function, no vulnerabilities are found, so no inline suggestions are made and a pop-up informs the developer that the code is secure.
 
+In the bottom function, which uses `gets()`, the insecure function is replaced with a safer STL alternative.
 
-The top function is secure, so no inline suggestions are being made and a pop-up appears to tell the developer that there were no found vulnerabilities.
+### Ask AI Tab
 
-In the bottom function however, which uses `gets()` - the unsecure function is being replaced with a STL secure alternative.
+Sometimes you may want more than inline suggestions. For example, you might want a detailed analysis of your code or an explanation of why a vulnerability was detected. You can do this using the **Co Hacker - Ask AI** command:
 
+![Ask AI Demo](assets/demo_ask_ai.gif)
 
-### Ask AI tab
-
-Sometimes we may want something else than an inline code assistant. Maybe we want to have a "Human" analysis of our code, or maybe we want to ask Co Hacker why a code selection was found vulnerable. We can do this using **Co Hacker - Ask AI** Command:
-
-![alt text](assets/demo_ask_ai.gif)
-
-
-In this example, we try a manual analysis of the `main()` function and Co Hacker modifies it. But why? after undoing the change we use the Ask Ai command, and in a new tab we have a detailed explanation of the problem in our code.
-
-
-
+In this example, we request a manual analysis of the `main()` function and Co Hacker modifies it. To understand the change, we use the Ask AI command, which opens a new tab with a detailed explanation of the issue in the code.
 
