@@ -114,7 +114,7 @@ async function handleScopeUpdate(document: vscode.TextDocument, position: vscode
 
     const codeBlock = document.getText(range);
     const currentLine = document.lineAt(position.line).text;
-    const currentFile = vscode.window.activeTextEditor?.document.fileName || '';
+    const currentFile = document.getText();
 
     const newCode = await fetchFixedCode(codeBlock, currentLine, currentFile);
     if (!newCode) return;
