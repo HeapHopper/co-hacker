@@ -34,5 +34,35 @@ In the example above we can see how the Co Hacker inline assistant detects three
 
 #### Upgrading deprecated code
 
-Old code using deprecated methods can be dangerous just like handling raw memory. This is why the inline assistant not returning just a binary classification if the code vulnerable or not. It has also a middle option: the code is secure alright, but should be upgraded:
+Old code using deprecated methods can be dangerous just like handling raw memory. This is why the inline assistant not returning just a binary classification if the code is vulnerable or not. It has also a middle option: the code is secure alright, but should be upgraded:
+
+![alt text](assets/demo_auto_ptr.gif)
+
+
+In the example above, the Co Hacker offers to replace the deprecated STL `std::auto_ptr<>` with the modern replacement `std::unique_ptr<>`.
+
+
+### Manual code security assistant
+
+It is also possible to use Co Hacker in manual way, selecting a code snippet and asking to get insight about the safety of the code:
+
+![alt text](assets/demo_manual_assistant.gif)
+
+
+The top function is secure, so no inline suggestions are being made and a pop-up appears to tell the developer that there were no found vulnerabilities.
+
+In the bottom function however, which uses `gets()` - the unsecure function is being replaced with a STL secure alternative.
+
+
+### Ask AI tab
+
+Sometimes we may want something else than an inline code assistant. Maybe we want to have a "Human" analysis of our code, or maybe we want to ask Co Hacker why a code selection was found vulnerable. We can do this using **Co Hacker - Ask AI** Command:
+
+![alt text](assets/demo_ask_ai.gif)
+
+
+In this example, we try a manual analysis of the `main()` function and Co Hacker modifies it. But why? after undoing the change we use the Ask Ai command, and in a new tab we have a detailed explanation of the problem in our code.
+
+
+
 
