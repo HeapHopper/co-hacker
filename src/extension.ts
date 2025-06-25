@@ -1,8 +1,14 @@
 // Load environment variables from .env file
 import * as dotenv from 'dotenv';
-const result = dotenv.config();
-if (result.error) {
-  console.error("Error loading environment variables:", result.error);
+import * as path from 'path';
+import * as fs from 'fs';
+
+// Load .env from the extension's installed directory
+const envPath = path.join(__dirname, '..', '.env');
+
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath });
+  console.error("Error loading environment variables:");
 } else {
   console.log("Loaded environment variables");
 }
