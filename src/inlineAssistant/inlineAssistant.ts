@@ -137,6 +137,17 @@ async function handleScopeUpdate(document: vscode.TextDocument, position: vscode
         vscode.commands.executeCommand('editor.action.inlineSuggest.trigger');
         vscode.window.showInformationMessage('Vulnerability detected! Suggested fix available inline (Tab to accept).');
     }
+
+    else if (response.suggest_fix !== '') {
+        lastInlineSuggestion = {
+            position: new vscode.Position(position.line, document.lineAt(position.line).range.end.character),
+            suggestFix: response.suggest_fix
+        };
+        // Trigger the inline suggestion (ghost text)
+        inlineSuggestionActive = true; // Activate suggestion
+        vscode.commands.executeCommand('editor.action.inlineSuggest.trigger');
+        vscode.window.showInformationMessage('Suggested fix available inline (Tab to accept).');
+    }
 }
 
 function findScopeStart(text: string, offset: number): number {
